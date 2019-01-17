@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>com.uncosmos.ideaplugins.demacro</id>
+    <name>Demacro</name>
+    <vendor email="kazecx@gmail.com" url="https://twtiter.com/kazec13">kAzecx</vendor>
+
+    <description>Create editor macros without visual effects.</description>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <application-components>
+        <component>
+            <interface-class>DemacroPlugin</interface-class>
+            <implementation-class>DemacroPlugin</implementation-class>
+        </component>
+    </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="tools" displayName="Demacro Plugin" id="preferences.Demacro" instance="DemacroConfigurable" />
+    </extensions>
+</idea-plugin>

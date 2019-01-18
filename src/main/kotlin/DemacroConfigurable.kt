@@ -17,7 +17,7 @@ class DemacroConfigurable : SearchableConfigurable {
 
     private var previousText: String? = null
 
-    override fun getDisplayName() = "Demacro Configuration"
+    override fun getDisplayName() = "Demacro"
     override fun getHelpTopic() = "preferences.Demacro"
     override fun getId() = "preferences.Demacro"
 

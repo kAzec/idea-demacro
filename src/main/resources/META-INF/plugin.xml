@@ -15,6 +15,6 @@
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable groupId="tools" displayName="Demacro Plugin" id="preferences.Demacro" instance="DemacroConfigurable" />
+        <applicationConfigurable groupId="tools" displayName="Demacro" id="preferences.Demacro" instance="DemacroConfigurable" />
     </extensions>
 </idea-plugin>

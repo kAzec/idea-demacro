@@ -24,47 +24,38 @@ class DemacroPlugin private constructor() : BaseComponent, PersistentStateCompon
     var store = DemacroStore()
         set(value) {
             field = value
-
-            if (enabled) {
-                reloadDemacros()
-            }
+            reloadDemacros()
         }
-
-    var enabled = true
-        private set
 
     var previousVersion = -1
         private set
 
     override fun initComponent() {
         log.info("Plugin started.")
-
-        if (enabled) {
-            reloadDemacros()
-        }
+        reloadDemacros()
     }
 
     override fun getState(): Element {
         log.debug("Serializing plugin state.")
 
-        val element = Element("demacro")
-        val meta = Element("plugin").let {
-            it.setAttribute("isEnabled", enabled.toString())
-            it.setAttribute("version", DemacroPlugin.version.toString())
+        val meta = Element("meta").apply {
+            setAttribute("version", DemacroPlugin.version.toString())
         }
-        element.addContent(meta)
 
-        element.addContent(Element("demacros")).let {
-            store.serializeInto(it)
+        val demacros = Element("demacros").apply {
+            store.serializeInto(this)
         }
-        return element
+
+        return Element("demacro").apply {
+            addContent(meta)
+            addContent(demacros)
+        }
     }
 
     override fun loadState(state: Element) {
         log.debug("Deserializing plugin state.")
 
-        state.getChild("plugin")?.let {
-            enabled = it.getAttributeValue("isEnabled")?.toBoolean() ?: true
+        state.getChild("meta")?.let {
             previousVersion = it.getAttributeValue("version")?.toIntOrNull() ?: -1
         }
 
@@ -72,6 +63,7 @@ class DemacroPlugin private constructor() : BaseComponent, PersistentStateCompon
     }
 
     override fun noStateLoaded() {
+        log.debug("Initial load, using default config.")
         store.deserializeFrom(null)
     }
 

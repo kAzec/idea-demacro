@@ -53,7 +53,7 @@ class DemacroPlugin private constructor() : BaseComponent, PersistentStateCompon
     }
 
     override fun loadState(state: Element) {
-        log.debug("Deserializing plugin state.")
+        log.debug("De-serializing plugin state.")
 
         state.getChild("meta")?.let {
             previousVersion = it.getAttributeValue("version")?.toIntOrNull() ?: -1
@@ -71,7 +71,7 @@ class DemacroPlugin private constructor() : BaseComponent, PersistentStateCompon
         store.demacros.filter { it.isEnabled }.apply {
             // Unregistering previous actions.
             val actionManager = ActionManager.getInstance()
-            actionManager.getActionIds("Demacro#").forEach {
+            actionManager.getActionIds(DemacroAction.idPrefix).forEach {
                 actionManager.unregisterAction(it)
             }
 
@@ -93,7 +93,7 @@ class DemacroPlugin private constructor() : BaseComponent, PersistentStateCompon
 
                 toolsMenuAction.add(demacroGroupAction, actionManager)
             }.forEach {
-                actionManager.registerAction("Demacro#$it.name", it, DemacroPlugin.pluginId)
+                actionManager.registerAction(it.id, it, DemacroPlugin.pluginId)
             }
         }
     }

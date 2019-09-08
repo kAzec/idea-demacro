@@ -5,6 +5,15 @@ import com.intellij.openapi.actionSystem.impl.ActionManagerImpl
 import com.intellij.openapi.editor.impl.EditorImpl
 
 class DemacroAction(private val demacro: Demacro) : AnAction(demacro.name) {
+    companion object {
+        const val idPrefix = "Demacro."
+    }
+
+    val id: String
+        get() {
+            return "$idPrefix${templatePresentation.text}"
+        }
+
     override fun actionPerformed(e: AnActionEvent) {
         if (!demacro.isEnabled) {
             e.presentation.isEnabled = false
